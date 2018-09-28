@@ -1,0 +1,30 @@
+{
+  "name": "typescript-exercise",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "jest": {
+    "transform": {
+      "^.+\\.(j|t)sx?$": "ts-jest"
+    },
+    "testRegex": "src/.*(__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "json"
+    ],
+    "coverageDirectory": "./coverage/"
+  },
+  "dependencies": {
+    "@types/jest": "^23.3.2",
+    "jest": "^23.6.0",
+    "ts-jest": "^23.10.2",
+    "typescript": "^3.0.3"
+  }
+}
