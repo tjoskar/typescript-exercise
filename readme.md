@@ -14,7 +14,7 @@ function padLeft(value: string, padding: any) {
 }
 ```
 
-Detta är alltså en funktion som tar en sträng `value` och som sedan returnerar en ny sträng med mellanslag efter strängen.
+Detta är alltså en funktion som tar en sträng `value` och som sedan returnerar en ny sträng med mellanslag före (till väster om) strängen.
 
 ex:
 
@@ -33,7 +33,7 @@ padLeft('hej', 'då ') // 'då hej'
 
 I `util.test.ts` finns det två test som kontrollerar just detta. Kör dessa med `npx jest`
 
-Tips: Du kan använda `typeof` men testa att skapa en till funktion som heter `isStirng` och `isNumber` och använd `is`-keyword:et.
+Tips: Du kan använda `typeof` men testa att skapa en till funktion som heter `isString` och `isNumber` och använd `is`-keyword:et.
 
 ```ts
 function isString(value: string | number): value is string {
@@ -55,7 +55,7 @@ Låt oss skapa en kö (skapa en fil som heter `queue.ts` i `src`).
 
 ```ts
 class Queue {
-  data = []
+  data: any[] = []
 
   push(item) {
     this.data.push(item)
@@ -75,13 +75,13 @@ console.log(queue.pop().toPrecision(1))
 console.log(queue.pop().toPrecision(1)) // 💥
 ```
 
-Skriv om klassen så den enbart tar `number` som argument till push och pop.
+Skriv om klassen så den enbart tar `number` som argument till push.
 
 Glöm inte bort att skriva testfall
 
 # Exercice 5
 
-Men nu tar `Queue` enbart siffror. Det är inte bra. Skriv om den så den kan ta vilken data typ som helst. Bara den är samma i klassen. Dvs. gör klassen generisk.
+Men nu tar `Queue` enbart siffror. Det är inte bra. Skriv om den så den kan ta vilken datatyp som helst. Bara den är samma i klassen. Dvs. gör klassen generisk.
 
 ```ts
 myNumberQueue.push(0)
@@ -102,9 +102,16 @@ Mycket bättre men vi kan fortfarande göra saker som `queue.data.reverse()`. De
 
 Som du märkte ovan behövde du ange typen vid initieringen. Det är för att typescript behöver veta på förhand vilken typ som du vill använda. Men i vissa fall kan typescript själv lista ut vilken typ som gäller.
 
-Skapa an konstruktor till `Queue` som tar en array med gen generiska typen som argument. Då behöver du inte lägre explicit ange typen på klassen.
+Skapa an konstruktor till `Queue` som tar en array med den generiska typen som argument. Då behöver du inte lägre explicit ange typen på klassen.
 
-# Exercice 9
+```ts
+const queue = new Queue([1, 2, 3])
+
+queue.push(0)
+queue.push('1') // Compile error
+```
+
+# Exercice 8
 
 Man kan även göra funktioner generiska.
 
@@ -151,7 +158,7 @@ myCoolFunction((n, s) => {
 })
 ```
 
-# Exercice 10
+# Exercice 9
 
 Skapa en funktion som heter `generateProductName` som tar en produkt som argument:
 
@@ -226,13 +233,13 @@ generateProductName(milk)
 generateProductName(car)
 ```
 
-Hum.. vi har nu både `milk` och `car` och båda ser väldigt snarlika ut, det är bara `volym` och `electric` som skiljer dem åt. Skapa ett bas interface som heter Product och sedan två under interface som lägger till `volym` och `electric`.
+Hum.. vi har nu både `milk` och `car` och båda ser väldigt snarlika ut, det är bara `volym` och `electric` som skiljer dem åt. Skapa ett bas interface som heter Product och sedan två sub interface som lägger till `volym` och `electric`.
 
 Testa sedan att skapa en bas typ och sedan två under typer.
 
 Om du undrar vad skillnaden mellan typer och interface är så kan jag rekommendera denna post: https://medium.com/@martin_hotell/interface-vs-type-alias-in-typescript-2-7-2a8f1777af4c
 
-# Exercice 11
+# Exercice 10
 
 Låt oss kolla lite på enums.
 
@@ -249,7 +256,7 @@ console.log(Color.red)
 
 Vad tror du att resultatet blir? Kolla!
 
-# Exercice 12
+# Exercice 11
 
 Enums fungerar även som typer:
 
@@ -288,7 +295,7 @@ type Product = {
 }
 
 const product = {
-  category: 'mejerisfdgfhgjhkjlk;l' // Ohno, typo... but it is okay
+  category: 'mejerisfdgfhgjhkjlk;l' // Ohno, typo... but it is okay by typescript
 } as Product
 ```
 
@@ -306,11 +313,11 @@ const product = {
 } as Product
 ```
 
-# Exercice 13
+# Exercice 12
 
 Låt oss kolla på `typeof`.
 
-Låt oss skapa ett databas config object:
+Låt oss skapa ett databas-config-object:
 
 ```ts
 const dbConfig = {
@@ -320,7 +327,7 @@ const dbConfig = {
 }
 ```
 
-och låt oss nu skapa en funktion som tar databas config som argument.
+och låt oss nu skapa en funktion som tar databas-config som argument.
 
 ```ts
 function connectToDb(config) {
@@ -330,7 +337,7 @@ function connectToDb(config) {
 connectToDb({ database: 'mysql', password: 'my-password' }) // Runtime error: user is missing
 ```
 
-Det är inte bra, vi borde ha en typ på argumentet. Ett sett är att skapa en type:
+Det är inte bra, vi borde ha en typ på argumentet. Ett sätt är att skapa en type:
 
 ```ts
 type DbConfig = {
@@ -352,7 +359,7 @@ function connectToDb(config: DbConfig) {
 connectToDb({ database: 'mysql', password: 'my-password' }) // Compile error: user is missing 🙌
 ```
 
-Detta fungerar fint men vad händer om vi vill lägga till en prop till får config. Då måste man ju även uppdatera typen 😔
+Detta fungerar fint men vad händer om vi vill lägga till en prop till på config. Då måste man ju även uppdatera typen 😔
 
 Det finns dock glada nyheter! Vi kan använda `typeof`.
 
@@ -374,7 +381,7 @@ connectToDb({ database: 'mysql', password: 'my-password' }) // Compile error: us
 
 Mycket bättre! `typeof` är alltså väldigt användbar om du har ett statiskt object/funktion som du vill skapa en typ ifrån och det är vanligare än vad man kanske först tror.
 
-Lek gärna runt lite med `typeof` för att se hur det fungerar. Testa att använda `typeof` en funktion exempelvis.
+Lek gärna runt lite med `typeof` för att se hur det fungerar. Testa att använda `typeof` för en funktion exempelvis.
 
 Låt oss nu kolla på `keyof`. Detta keyword ger oss alla nycklar för en typ.
 
@@ -396,7 +403,7 @@ getConfigByKey('database') // 'mysql'
 getConfigByKey('developmode') // undefined 😱
 ```
 
-Detta är inte bra. Det är enkelt att råka skriva fel och vi kan inte heller få någon hjälv av kompilatorn.
+Detta är inte bra. Det är enkelt att råka skriva fel och vi kan inte heller få någon hjälp av kompilatorn.
 
 Här kan vi använda `keyof`.
 
@@ -408,7 +415,7 @@ type ConfigKeys = keyof Config
 type ConfigKeys = keyof typeof config
 ```
 
-Detta ger oss en typ som innehåller alla strängar som motsvarar alla nyklar i objectet `config`, dvs: `'database' | 'developMode' | 'domain' | 'logPath'`. Detta gör att vi kan skriva om vår kod ovan till:
+Detta ger oss en typ som innehåller alla strängar som motsvarar alla nycklar i objektet `config`, dvs: `'database' | 'developMode' | 'domain' | 'logPath'`. Detta gör att vi kan skriva om vår kod ovan till:
 
 ```ts
 const config = {
@@ -438,7 +445,7 @@ Nu kanske du tänker: WTF?
 
 Lugn, låt oss gå igenom det, steg för steg.
 
-Först så säger vi att `Readonly` är generisk. Dvs, vi kan använda `Readonly` med en annan typ. Sedan så säger vi att `Readonly` är en typ som har propertys som är samma sak som nyklen på typen som du ger till `Readonly`. Ex.
+Först så säger vi att `Readonly` är generisk. Dvs, vi kan använda `Readonly` med en annan typ. Sedan så säger vi att `Readonly` är en typ som har properties som är samma sak som nyckeln på typen som du ger till `Readonly`. Ex.
 
 ```ts
 type Stringify<T> = { [P in keyof T]: string }
@@ -458,7 +465,7 @@ type MyStringifyConfig = {
 }
 ```
 
-Om vi använder `T[P]` så kan vi säga att alla propertys ska behålla sin typ:
+Om vi använder `T[P]` så kan vi säga att alla properties ska behålla sin typ:
 
 ```ts
 type KeepTheType<T> = { [P in keyof T]: T[P] }
@@ -495,7 +502,7 @@ function connect(config: Readonly<Config>) {
 }
 ```
 
-Eftersom `Readonly` är ganska användbar så finns den redan globalt så den behöver man inte återskapa. Samma sak gäller några andra typer, så som: `Partial`, `Record`, `Pick` och `Omit`
+Eftersom `Readonly` är ganska användbar så finns den redan globalt så den behöver man inte återskapa. Samma sak gäller några andra typer, så som: `Partial`, `Record` och `Pick`
 
 ### Partial
 
@@ -549,7 +556,7 @@ type DatabaseConfig = Pick<Config, 'database'>
 
 function connect(databaseConfig: DatabaseConfig) {
   databaseConfig.database // OK
-  databaseConfig.host // No!
+  databaseConfig.host // Type error
 }
 ```
 
@@ -561,7 +568,7 @@ function value(obj, ...keys) {
 }
 ```
 
-Den tar ett object som argument och en lista med nyklar och sedan returnerar värdet baserat på dessa nyklar:
+Den funktion tar ett object som argument och en lista med nycklar och sedan returnerar värdet baserat på dessa nycklar:
 
 ```ts
 value({ a: 1, b: 2 }, 'a') // [ 1 ]
@@ -577,7 +584,7 @@ value({ a: 1, b: 2 }, 'a', 'c') // Error
 value({ a: 1, c: 2 }, 'a', 'c') // OK
 ```
 
-# Exercice 14
+# Exercice 13
 
 Följande funktion finns i `util.js`
 
@@ -600,7 +607,7 @@ Skapa typer för `mapObject` så att följande resultat nås:
 
 ```ts
 mapObject({ a: 'Hej Hej', b: 'Katten musen' }, v => v.length) // { a: 7, b: 12 }
-mapObject({ a: 'Hej Hej', b: 'Katten musen' }, v => v.toExponential()) // Compelation error
+mapObject({ a: 'Hej Hej', b: 'Katten musen' }, v => v.toExponential()) // Compilation error
 mapObject({ a: 5, b: 1 }, v => v.toExponential()) // { a: 5e+0, 1e+0 }
-mapObject({ a: 5, b: 1 }, v => v.length) // Compelation error
+mapObject({ a: 5, b: 1 }, v => v.length) // Compilation error
 ```
