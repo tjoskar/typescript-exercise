@@ -4,7 +4,7 @@ Skapa en function som heter `add` i `util.ts`
 
 Den ska ta två siffror som argument. Ange även att den ska returnera en siffra. Dvs. explicit typning. Du kan även låta typescript lista ut typen åt dig med implicit typning.
 
-# Exercice 1
+# Exercice 2
 
 I `util.ts` finns följande funktion.
 
@@ -39,7 +39,7 @@ Tips: Du kan använda `typeof` men testa att skapa en till funktion som heter `i
 function isString(value: string | number): value is string {
 ```
 
-# Exercice 2
+# Exercice 3
 
 Skriv om `padLeft` så att `padding` är optional. Och returnera `value` i så fall.
 
@@ -49,7 +49,7 @@ padLeft('hej') // 'hej'
 
 Kom i håg att skriv ett test för det.
 
-# Exercice 3
+# Exercice 4
 
 Låt oss skapa en kö (skapa en fil som heter `queue.ts` i `src`).
 
@@ -79,7 +79,7 @@ Skriv om klassen så den enbart tar `number` som argument till push och pop.
 
 Glöm inte bort att skriva testfall
 
-# Exercice 4
+# Exercice 5
 
 Men nu tar `Queue` enbart siffror. Det är inte bra. Skriv om den så den kan ta vilken data typ som helst. Bara den är samma i klassen. Dvs. gör klassen generisk.
 
@@ -94,17 +94,17 @@ myNumberQueue instanceof Queue // true
 myStringQueue instanceof Queue // true
 ```
 
-# Exercice 5
+# Exercice 6
 
 Mycket bättre men vi kan fortfarande göra saker som `queue.data.reverse()`. Det är inget bra. Gör `data` private.
 
-# Exercice 6
+# Exercice 7
 
 Som du märkte ovan behövde du ange typen vid initieringen. Det är för att typescript behöver veta på förhand vilken typ som du vill använda. Men i vissa fall kan typescript själv lista ut vilken typ som gäller.
 
 Skapa an konstruktor till `Queue` som tar en array med gen generiska typen som argument. Då behöver du inte lägre explicit ange typen på klassen.
 
-# Exercice 7
+# Exercice 9
 
 Man kan även göra funktioner generiska.
 
@@ -151,7 +151,7 @@ myCoolFunction((n, s) => {
 })
 ```
 
-# Exercice 8
+# Exercice 10
 
 Skapa en funktion som heter `generateProductName` som tar en produkt som argument:
 
@@ -232,7 +232,7 @@ Testa sedan att skapa en bas typ och sedan två under typer.
 
 Om du undrar vad skillnaden mellan typer och interface är så kan jag rekommendera denna post: https://medium.com/@martin_hotell/interface-vs-type-alias-in-typescript-2-7-2a8f1777af4c
 
-# Exercice 9
+# Exercice 11
 
 Låt oss kolla lite på enums.
 
@@ -249,7 +249,7 @@ console.log(Color.red)
 
 Vad tror du att resultatet blir? Kolla!
 
-# Exercice 10
+# Exercice 12
 
 Enums fungerar även som typer:
 
@@ -306,7 +306,7 @@ const product = {
 } as Product
 ```
 
-# Exercice 11
+# Exercice 13
 
 Låt oss kolla på `typeof`.
 
@@ -577,7 +577,7 @@ value({ a: 1, b: 2 }, 'a', 'c') // Error
 value({ a: 1, c: 2 }, 'a', 'c') // OK
 ```
 
-# Exercice 12
+# Exercice 14
 
 Följande funktion finns i `util.js`
 
@@ -593,13 +593,14 @@ Detta gör att man exempelvis kan:
 
 ```ts
 mapObject({ a: 'Hej Hej', b: 'Katten musen' }, v => v.length) // { a: 7, b: 12 }
+mapObject({ a: 5, b: 1 }, v => v.toExponential()) // { a: 5e+0, 1e+0 }
+```
+
+Skapa typer för `mapObject` så att följande resultat nås:
+
+```ts
+mapObject({ a: 'Hej Hej', b: 'Katten musen' }, v => v.length) // { a: 7, b: 12 }
 mapObject({ a: 'Hej Hej', b: 'Katten musen' }, v => v.toExponential()) // Compelation error
 mapObject({ a: 5, b: 1 }, v => v.toExponential()) // { a: 5e+0, 1e+0 }
 mapObject({ a: 5, b: 1 }, v => v.length) // Compelation error
 ```
-
-Nu är det
-
-# Exercice 13
-
-Låt oss kolla på any, never, void, unknown
